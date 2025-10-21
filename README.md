@@ -37,4 +37,14 @@ Onde:
 
 [**Referência: Dynamometer — Wikipedia**](https://en.wikipedia.org/wiki/Dynamometer)
 
-## Sensores
+## O que está faltando?
+- Sensores
+    - Rotação
+    - Torque
+    - Temperatura
+        - Disco do freio eletromagnético
+        - Motor do carro
+    - Corrente
+- Controle da fonte de corrente
+- Suporte para o carro
+- Suporte para o dinamômetro
