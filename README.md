@@ -39,12 +39,12 @@ Onde:
 
 ## O que está faltando?
 - Sensores
-    - Rotação
-    - Torque
-    - Temperatura
-        - Disco do freio eletromagnético
-        - Motor do carro
-    - Corrente
+    - Rotação -> Photo Interrupter Sensor + Encoder Wheel
+    - Torque -> Não sei
+    - Temperatura -> Não sei
+        - Disco do freio eletromagnético -> Não sei
+        - Motor do carro -> Não sei
+    - Corrente -> Não sei
 - Controle da fonte de corrente
 - Suporte para o carro
 - Suporte para o dinamômetro
