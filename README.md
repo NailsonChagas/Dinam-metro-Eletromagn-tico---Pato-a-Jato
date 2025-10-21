@@ -64,8 +64,8 @@ Onde:
 
 ## O que está faltando?
 - Sensores
-    - Rotação -> Photo Interrupter Sensor + Encoder Wheel
-    - Torque -> Não sei
+    - Rotação
+    - Torque
     - Temperatura -> Não sei
         - Disco do freio eletromagnético -> Não sei
         - Motor do carro -> Não sei
@@ -73,3 +73,92 @@ Onde:
 - Controle da fonte de corrente
 - Suporte para o carro
 - Suporte para o dinamômetro
+
+## Sensores
+
+A medição precisa de rotação, torque e corrente é essencial para o cálculo do desempenho do motor e da potência dissipada pelo sistema. Esses sensores também permitem o controle e calibração do dinamômetro durante os testes.
+
+### Rotação (Velocidade Angular e RPM)
+
+Para medir a **velocidade de rotação** do eixo, podem ser utilizados sensores ópticos ou magnéticos.
+Um método comum consiste no uso de um **photo interrupter sensor** (sensor óptico) acoplado a uma **roda codificadora (encoder wheel)** ou disco perfurado. Cada interrupção do feixe de luz gera um pulso digital, que é contabilizado por um microcontrolador.
+
+**Exemplo de componentes:**
+
+- **Sensor óptico:** OPB704, CNY70, ou módulos de encoder óptico prontos.
+- **Alternativa magnética:** sensor de efeito Hall (A3144, SS49E) com ímã no eixo.
+
+A **velocidade angular** é calculada a partir da frequência dos pulsos:
+
+$$
+\omega = 2\pi \times \frac{N}{t}
+$$
+
+Onde:
+
+* $\omega$ = velocidade angular (rad/s);
+* $N$ = número de rotações detectadas;
+* $t$ = intervalo de tempo medido.
+
+A **velocidade de rotação (RPM)** é obtida por:
+
+$$
+\text{RPM} = 60 \times \frac{N}{t}
+$$
+
+### Torque
+
+O torque do motor é determinado indiretamente pela força de reação que o freio exerce sobre o seu suporte durante a execução dos testes.
+
+Para isso, o conjunto fixo (estator ou suporte do freio) é conectado a um **braço de alavanca rígido** de comprimento conhecido $L$, medido a partir do **centro do eixo** até o ponto de aplicação da força.
+Uma **célula de carga** mede a força $F$ aplicada na extremidade do braço.
+
+O torque é então calculado por:
+
+$$
+\tau = F \times L \times \cos(\theta)
+$$
+
+Onde:
+
+- $\tau$ = torque de frenagem (N·m);
+- $F$ = força medida pela célula de carga (N);
+- $L$ = comprimento do braço (m);
+- $\theta$ = ângulo entre a direção da força e o braço (idealmente 90°).
+
+**Cuidados de montagem:**
+
+- O braço deve ser **rígido e sem folgas**, para manter $L$ constante.
+- Utilize um **ponto de ancoragem fixo** ou estrutura rígida para referência.
+- Evite **forças parasitas** (ex.: empuxo axial ou vibração lateral) com o uso de buchas ou guias.
+
+### Temperatura
+
+A temperatura é um parâmetro importante tanto para o **disco do freio** quanto para o **motor em teste**, pois o aquecimento influencia a resistência dos materiais e a dissipação térmica.
+
+**Sensores recomendados:**
+
+- **Disco do freio:** termopar tipo *K* ou sensor *PT100* fixado próximo à superfície do disco.
+- **Motor:** termistor *NTC* ou *DS18B20* para leitura de temperatura de carcaça ou enrolamentos.
+
+O monitoramento contínuo evita sobreaquecimento no disco e permite estimar o comportamento térmico do sistema durante ensaios prolongados.
+
+### Corrente
+
+A corrente elétrica aplicada às bobinas eletromagnéticas determina diretamente a intensidade do campo magnético e, portanto, a força de frenagem.
+
+**Métodos de medição:**
+
+- **Sensor de efeito Hall** (ex.: ACS712, INA219, INA226).
+- **Shunt resistor** de precisão com amplificador diferencial.
+
+A corrente medida deve ser usada tanto para **controle do campo** (via PWM ou fonte regulável) quanto para registro de dados e posterior análise de desempenho.
+
+## Integração e Aquisição de Dados
+
+Os sinais provenientes dos sensores podem ser processados por um **microcontrolador** (ex.: *STM32 Blue Pill* ou *ESP32*), que realiza:
+
+- Leitura analógica/digital (ADC) dos sensores de torque e corrente;
+- Contagem de pulsos do sensor de rotação (via interrupções);
+- Cálculo em tempo real de torque, velocidade e potência;
+- Envio dos dados para um computador via Bluetooth ou USB
