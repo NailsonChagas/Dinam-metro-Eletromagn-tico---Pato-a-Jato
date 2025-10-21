@@ -138,8 +138,8 @@ A temperatura é um parâmetro importante tanto para o **disco do freio** quanto
 
 **Sensores recomendados:**
 
-- **Disco do freio:** termopar tipo *K* ou sensor *PT100* fixado próximo à superfície do disco.
-- **Motor:** termistor *NTC* ou *DS18B20* para leitura de temperatura de carcaça ou enrolamentos.
+- **Disco do freio:** termopar tipo K ou sensor PT100 fixado próximo à superfície do disco.
+- **Motor:** termistor NTC ou DS18B2 para leitura de temperatura de carcaça ou enrolamentos.
 
 O monitoramento contínuo evita sobreaquecimento no disco e permite estimar o comportamento térmico do sistema durante ensaios prolongados.
 
