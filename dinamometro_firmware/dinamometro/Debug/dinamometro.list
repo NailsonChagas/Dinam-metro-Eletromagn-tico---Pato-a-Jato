@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   0000919e  00000000  00000000  000247b0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000842be  00000000  00000000  0002d94e  2**0
+ 18 .debug_str    000842c4  00000000  00000000  0002d94e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b1c0c  2**0
+ 19 .comment      00000043  00000000  00000000  000b1c12  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000264c  00000000  00000000  000b1c50  2**2
+ 20 .debug_frame  0000264c  00000000  00000000  000b1c58  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000091  00000000  00000000  000b429c  2**0
+ 21 .debug_line_str 00000097  00000000  00000000  000b42a4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -552,11 +552,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
  8000658:	4b22      	ldr	r3, [pc, #136]	@ (80006e4 <HAL_TIM_PeriodElapsedCallback+0xdc>)
  800065a:	701a      	strb	r2, [r3, #0]
 
-	if(icCount >= 2000) // a cada 500 interrupção de tempo em um timer de 1kHz vai ser 0.5s
+	if(icCount >= 500) // a cada 500 interrupção de tempo em um timer de 1kHz vai ser 0.5s
  800065c:	4b1e      	ldr	r3, [pc, #120]	@ (80006d8 <HAL_TIM_PeriodElapsedCallback+0xd0>)
  800065e:	881b      	ldrh	r3, [r3, #0]
  8000660:	b29b      	uxth	r3, r3
- 8000662:	f5b3 6ffa 	cmp.w	r3, #2000	@ 0x7d0
+ 8000662:	f5b3 7ffa 	cmp.w	r3, #500	@ 0x1f4
  8000666:	d332      	bcc.n	80006ce <HAL_TIM_PeriodElapsedCallback+0xc6>
 	{
 		float timeElapsed = icCount * MS_TO_S;
