@@ -60,8 +60,8 @@ all: main-build
 main-build: dinamometro.elf secondary-outputs
 
 # Tool invocations
-dinamometro.elf dinamometro.map: $(OBJS) $(USER_OBJS) /home/nailsonchagas/Downloads/Dinam-metro-Eletromagn-tico---Pato-a-Jato/dinamometro_firmware/dinamometro/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "dinamometro.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/nailsonchagas/Downloads/Dinam-metro-Eletromagn-tico---Pato-a-Jato/dinamometro_firmware/dinamometro/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dinamometro.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+dinamometro.elf dinamometro.map: $(OBJS) $(USER_OBJS) /mnt/9a3f66c9-6d6d-4e50-b992-ca8f034e1022/Download/dinamometro_PJ/dinamometro_firmware/dinamometro/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "dinamometro.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/mnt/9a3f66c9-6d6d-4e50-b992-ca8f034e1022/Download/dinamometro_PJ/dinamometro_firmware/dinamometro/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dinamometro.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -36,7 +36,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define PULSES_PER_ROTATION 8.0f
+#define RPS_TO_RPM 60
+#define MS_TO_S 0.001f
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,7 +53,9 @@ TIM_HandleTypeDef htim1;
 volatile uint8_t currentEncoderState = 0;
 volatile uint8_t previousEncoderState = 0;
 volatile uint8_t encoderPulses = 0;
-volatile uint32_t test = 0;
+volatile uint16_t icCount = 0;
+volatile float rpm = 0;
+volatile float rotationPerSecond = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,6 +70,8 @@ static void MX_TIM1_Init(void);
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	icCount++;
+
 	currentEncoderState = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13);
 
 	if(previousEncoderState == 1 && currentEncoderState == 0)
@@ -74,7 +80,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 	previousEncoderState = currentEncoderState;
 
-	test++;
+	if(icCount >= 2000) // a cada 500 interrupção de tempo em um timer de 1kHz vai ser 0.5s
+	{
+		float timeElapsed = icCount * MS_TO_S;
+		float aux = ((float)encoderPulses/PULSES_PER_ROTATION);
+		rotationPerSecond = aux/timeElapsed;
+
+		rpm = rotationPerSecond * RPS_TO_RPM;
+
+		icCount = 0;
+		encoderPulses = 0;
+	}
 }
 /* USER CODE END 0 */
 
